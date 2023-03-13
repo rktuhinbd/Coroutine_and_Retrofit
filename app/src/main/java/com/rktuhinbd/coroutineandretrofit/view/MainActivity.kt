@@ -2,11 +2,12 @@ package com.rktuhinbd.coroutineandretrofit.view
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import com.rktuhinbd.coroutineandretrofit.databinding.ActivityMainBinding
 import com.rktuhinbd.coroutineandretrofit.network.Api
-import kotlinx.coroutines.DelicateCoroutinesApi
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -15,9 +16,8 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
 
-    val BASE_URL = "https://jsonplaceholder.typicode.com/"
+    private val BASE_URL = "https://jsonplaceholder.typicode.com/"
 
-    @OptIn(DelicateCoroutinesApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -30,7 +30,7 @@ class MainActivity : AppCompatActivity() {
             .build()
             .create(Api::class.java)
 
-        GlobalScope.launch(Dispatchers.IO) {
+        lifecycleScope.launch {
             val response = retrofit.getUsers()
             if (response.isSuccessful) {
                 launch(Dispatchers.Main) {

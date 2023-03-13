@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.rktuhinbd.coroutineandretrofit.databinding.RvItemUsersBinding
 import com.rktuhinbd.coroutineandretrofit.model.UserResponse
 
-class RecyclerAdapter(val users: List<UserResponse>) :
+class RecyclerAdapter(private val users: List<UserResponse>) :
     RecyclerView.Adapter<RecyclerAdapter.ViewHolder>() {
 
     inner class ViewHolder(val binding: RvItemUsersBinding) :
